@@ -19,6 +19,7 @@ public class TheCheat {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Account account;
 	private String description;
+	private Long amount;
 
 	public void changeAccount(Account account){
 		if(this.account != null){

@@ -14,18 +14,15 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import lombok.*;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
 @Entity
+@ToString
 public class Account {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,7 +44,7 @@ public class Account {
 
 	private String description;
 
-	private Long DepositAndWithdrawalMoney;
+	private Long depositAndWithdrawalMoney;
 
 	@Enumerated(EnumType.STRING)
 	private Type isDepositOrWithdrawal;
