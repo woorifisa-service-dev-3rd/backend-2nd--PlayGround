@@ -37,6 +37,7 @@ public class Account {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Fiance fiance;
 
+	@Builder.Default
 	@OneToMany(mappedBy = "account")
 	private List<TheCheat> theCheats = new ArrayList<>();
 

@@ -31,6 +31,7 @@ public class User {
 
 	private String phoneNumber;
 
+	@Builder.Default
 	@OneToMany(mappedBy = "user")
 	private List<Account> accounts = new ArrayList<>();
 }

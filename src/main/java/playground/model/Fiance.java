@@ -32,6 +32,7 @@ public class Fiance {
 
 	private String name;
 
+	@Builder.Default
 	@OneToMany(mappedBy = "fiance")
 	private List<Account> accounts = new ArrayList<>();
 }

@@ -1,8 +1,6 @@
 package playground.model;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +13,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 public class TheCheat {
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Account account;
