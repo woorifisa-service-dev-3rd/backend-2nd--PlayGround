@@ -10,6 +10,9 @@ import playground.dto.Info;
 import playground.dto.cheatResponse;
 import playground.model.Account;
 import playground.model.TheCheat;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import playground.service.AccountService;
 
 import java.util.ArrayList;
@@ -57,6 +60,5 @@ public class AccountController {
         Info info = Info.builder().cases(byTheCheatLog.size()).amount(amount).build();
         return CheatResult.builder().result(flag).info(info).build();
     }
-
 
 }
