@@ -15,4 +15,5 @@ public interface TheCheatRepository extends JpaRepository<TheCheat, Long> {
     List<TheCheat> findByAccountNumber(@Param("accountNumber") String accountNumber);
 
     List<TheCheat> findByAccount_AccountNumber(String accountNumber);
+
 }
