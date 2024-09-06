@@ -8,7 +8,7 @@ import javax.transaction.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class AccountService {
+public class AccountService  {
 
 
 }
