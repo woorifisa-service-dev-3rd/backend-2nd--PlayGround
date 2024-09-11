@@ -24,13 +24,16 @@ INSERT INTO Users (user_name, phone_number) VALUES ("구자빈","010-0000-0000")
 INSERT INTO Users (user_name, phone_number) VALUES ("김민지","010-0000-0000");
 
 INSERT INTO Account (user_id, fiance_id, account_number, money, description, deposit_and_withdrawal_money, is_deposit_or_withdrawal, date_time)
-VALUES (1,1,"1234567890987",10000000,"심심해", 10000, "Deposit", "2024-09-06 11:30:50");
+VALUES (1,1,"1234567890987",10000000,"심심해", 10000, "Withdrawal", "2024-09-06 11:30:50");
 
 INSERT INTO Account (user_id, fiance_id, account_number, money, description, deposit_and_withdrawal_money, is_deposit_or_withdrawal, date_time)
-VALUES (2,4,"0987654321234",30000000,"바보", 280500, "Withdrawal", "2024-09-06 11:30:50");
+VALUES (2,4,"0987654321234",30000000,"바보", 280500, "Deposit", "2024-09-06 11:30:50");
 
 INSERT INTO Account (user_id, fiance_id, account_number, money, description, deposit_and_withdrawal_money, is_deposit_or_withdrawal, date_time)
-VALUES (2,4,"1111111111111",30000000,"바보", 280500, "Withdrawal", "2024-09-06 11:30:50");
+VALUES (2,4,"1111111111111",30000000,"바보", 280500, "Deposit", "2024-09-06 11:30:50");
+
+INSERT INTO Account (user_id, fiance_id, account_number, money, description, deposit_and_withdrawal_money, is_deposit_or_withdrawal, date_time)
+VALUES (1,3,"2222222222222",30000000,"바보", 280500, "Deposit", "2024-09-06 12:40:20");
 
 INSERT INTO the_cheat (account_id, account_number, description, amount) VALUES (1,"1234567890987","사기쳤음",100000);
 INSERT INTO the_cheat (account_id, account_number, description, amount) VALUES (2,"0987654321234","당근에서 도망갔습니다.",20000);

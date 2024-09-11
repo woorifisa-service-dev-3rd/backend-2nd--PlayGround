@@ -1,10 +1,14 @@
 package playground.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
+import playground.dto.AccountOftenDTO;
 import playground.model.Account;
 import playground.model.TheCheat;
+import playground.model.Type;
 import playground.repository.AccountRepository;
 import playground.repository.TheCheatRepository;
 
@@ -47,5 +51,15 @@ public class AccountService {
     public List<TheCheat> findByTheCheatLog(String accountNumber){
         return theCheatRepository.findByAccount_AccountNumber(accountNumber);
 
+    }
+
+    public List<Account> findByOrderByDateTimeDesc(Long userId){
+        Pageable limitPage = PageRequest.of(0, 5);
+        return accountRepository.findByTypeAndUserId(Type.Deposit,userId, limitPage);
+    }
+
+    public List<Object[]> findAccountOftenDTO(Long id){
+        Pageable limitPage = PageRequest.of(0, 5);
+        return accountRepository.findByTypeOrderByCountDescNativeQuery("Deposit", id, limitPage);
     }
 }

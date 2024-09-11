@@ -4,18 +4,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import lombok.*;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,6 +17,7 @@ import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 @Getter
 @Entity
 @ToString
+@EntityListeners(AuditingEntityListener.class)
 public class Account {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,6 +44,7 @@ public class Account {
 	@Enumerated(EnumType.STRING)
 	private Type isDepositOrWithdrawal;
 
+	@CreatedDate
 	private LocalDateTime dateTime;
 
 	public void changeUser(User user){

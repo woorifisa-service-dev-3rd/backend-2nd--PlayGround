@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import playground.dto.AccountRecentDTO;
-import playground.dto.CheatResult;
-import playground.dto.Info;
-import playground.dto.cheatResponse;
+import playground.dto.*;
 import playground.model.Account;
 import playground.model.TheCheat;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +14,7 @@ import playground.service.AccountService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -37,14 +35,27 @@ public class AccountController {
     }
 
     @ResponseBody
-    @GetMapping({"/recent", "/often"})
-    public List<AccountRecentDTO> accountRecent(){
-        List<Account> byAllAccount = accountService.findByAllAccount();
+    @GetMapping("/recent/{id}")
+    public List<AccountRecentDTO> accountRecent(@PathVariable Long id){
+        List<Account> byAllAccount = accountService.findByOrderByDateTimeDesc(id);
         List<AccountRecentDTO> list = new ArrayList<>();
         for(Account account : byAllAccount) {
             list.add(AccountRecentDTO.builder().bankCode(account.getFiance().getId()).userName(account.getUser().getUserName()).accountNumber(account.getAccountNumber()).uid(account.getId()).build());
         }
         return list;
+    }
+
+    @ResponseBody
+    @GetMapping("/often/{id}")
+    public List<AccountOftenDTO> accountOften(@PathVariable Long id){
+        List<Object[]> objects = accountService.findAccountOftenDTO(id);
+        return objects.stream().map((object)->AccountOftenDTO.builder()
+                        .bankCode(((Number)object[0]).longValue())
+                        .accountNumber(String.valueOf(object[1]))
+                        .uid(((Number)object[2]).longValue())
+                        .userName(String.valueOf(object[3]))
+                        .build())
+                .collect(Collectors.toList());
     }
 
     @ResponseBody
