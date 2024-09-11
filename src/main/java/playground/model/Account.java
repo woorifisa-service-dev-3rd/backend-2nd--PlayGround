@@ -24,17 +24,21 @@ public class Account {
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@Column(nullable = false)
 	private User user;
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@Column(nullable = false)
 	private Fiance fiance;
 
 	@Builder.Default
 	@OneToMany(mappedBy = "account")
 	private List<TheCheat> theCheats = new ArrayList<>();
 
+	@Column(nullable = false)
 	private String accountNumber;
 
+	@Column(nullable = false)
 	private Long money;
 
 	private String description;

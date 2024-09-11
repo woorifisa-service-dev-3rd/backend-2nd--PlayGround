@@ -16,10 +16,17 @@ public class TheCheat {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(nullable = false)
 	private String accountNumber;
+
+	@Column(nullable = false)
 	private String description;
+
 	@ManyToOne(fetch = FetchType.LAZY)
+	@Column(nullable = false)
 	private Account account;
+
+	@Column(nullable = false)
 	private Long amount;
 
 
