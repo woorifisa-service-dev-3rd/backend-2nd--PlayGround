@@ -24,11 +24,11 @@ public class Account {
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@Column(nullable = false)
+	@JoinColumn(nullable = false)
 	private User user;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@Column(nullable = false)
+	@JoinColumn(nullable = false)
 	private Fiance fiance;
 
 	@Builder.Default

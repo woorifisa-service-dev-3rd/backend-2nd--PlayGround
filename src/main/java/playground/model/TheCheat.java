@@ -23,7 +23,7 @@ public class TheCheat {
 	private String description;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@Column(nullable = false)
+	@JoinColumn(nullable = false)
 	private Account account;
 
 	@Column(nullable = false)
