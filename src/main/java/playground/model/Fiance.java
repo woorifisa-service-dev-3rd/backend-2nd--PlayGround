@@ -5,16 +5,15 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import playground.dto.UserInsertDTO;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
 @Entity
+@ToString
 public class Fiance {
 
 	@Id
@@ -31,4 +30,6 @@ public class Fiance {
 	@Builder.Default
 	@OneToMany(mappedBy = "fiance")
 	private List<Account> accounts = new ArrayList<>();
+
+
 }

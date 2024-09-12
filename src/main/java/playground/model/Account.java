@@ -10,13 +10,13 @@ import lombok.*;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import playground.dto.UserInsertDTO;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
 @Entity
-@ToString
 @EntityListeners(AuditingEntityListener.class)
 public class Account {
 
@@ -65,5 +65,18 @@ public class Account {
 		}
 		this.fiance = fiance;
 		fiance.getAccounts().add(this);
+	}
+
+	public static Account from(UserInsertDTO userInsertDTO, User user, Fiance fiance) {
+		return Account.builder()
+				.user(user)  // Set the user
+				.fiance(fiance)  // Set the fiance
+				.accountNumber(userInsertDTO.getAccount_number())  // Set the account number from DTO
+				.money(0L)  // Set money (assuming money comes from deposit/withdrawal)
+				.description(userInsertDTO.getDescription())  // Set description
+				.depositAndWithdrawalMoney(userInsertDTO.getDepositAndWithdrawalMoney())  // Set deposit/withdrawal amount
+				.isDepositOrWithdrawal(Type.Deposit)  // Assuming Type enum, adjust as needed (you might need to map from DTO)
+				.dateTime(userInsertDTO.getDateTime())  // Set dateTime (adjust if DTO provides a LocalDate instead of LocalDateTime)
+				.build();
 	}
 }

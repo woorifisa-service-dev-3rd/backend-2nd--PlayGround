@@ -6,11 +6,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import playground.dto.AccountOftenDTO;
-import playground.model.Account;
-import playground.model.TheCheat;
-import playground.model.Type;
+import playground.model.*;
 import playground.repository.AccountRepository;
+import playground.repository.FianceRepository;
 import playground.repository.TheCheatRepository;
+import playground.repository.UserRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -21,6 +21,8 @@ import java.util.List;
 public class AccountService {
     private final TheCheatRepository theCheatRepository;
     private final AccountRepository accountRepository;
+    private final UserRepository userRepository;
+    private final FianceRepository fianceRepository;
 
 
     public String searchAccount(String accountNumber){
@@ -61,5 +63,31 @@ public class AccountService {
     public List<Object[]> findAccountOftenDTO(Long id){
         Pageable limitPage = PageRequest.of(0, 5);
         return accountRepository.findByTypeOrderByCountDescNativeQuery("Deposit", id, limitPage);
+    }
+
+
+
+    public Boolean isUserinfo(String name){
+        return userRepository.existsByUserName(name);
+    }
+
+    public User findUser(String name){
+        return userRepository.findByUserName(name);
+    }
+
+    public Boolean isAccountinfo(String accountnumber){
+        return accountRepository.existsByAccountNumber(accountnumber);
+    }
+
+    public User createUserInfo(User new_user_info){
+        return userRepository.save(new_user_info);
+    }
+
+    public Account createAccountInfo(Account new_account_info){
+        return accountRepository.save(new_account_info);
+    }
+
+    public Fiance findByFianceId(String financeName){
+        return fianceRepository.findByName(financeName).orElseThrow(() -> new RuntimeException("fianceName이 정확하지 않습니다."));
     }
 }
