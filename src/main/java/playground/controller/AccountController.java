@@ -1,15 +1,18 @@
 package playground.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import playground.dto.*;
 import playground.model.Account;
+import playground.model.Fiance;
 import playground.model.TheCheat;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import playground.model.User;
 import playground.service.AccountService;
 
 import java.util.ArrayList;
@@ -70,6 +73,40 @@ public class AccountController {
         }
         Info info = Info.builder().cases(byTheCheatLog.size()).amount(amount).build();
         return CheatResult.builder().result(flag).info(info).build();
+    }
+
+    @ResponseBody
+    @PostMapping("/insert")
+    public AccountDTO insertAccount_info(@RequestBody UserInsertDTO userInsertDTO) {
+        User user = User.from(userInsertDTO);
+        Fiance fiance = accountService.findByFianceId(userInsertDTO.getFinance_name());
+        Account savedAccount;
+        if (accountService.isUserinfo(userInsertDTO.getName())) {
+            User existingUser = accountService.findUser(userInsertDTO.getName());
+            Account account = Account.from(userInsertDTO, existingUser, fiance);
+            savedAccount = accountService.createAccountInfo(account);
+
+        } else {
+            User savedUser = accountService.createUserInfo(user);
+            Account account = Account.from(userInsertDTO, savedUser, fiance);
+            savedAccount = accountService.createAccountInfo(account);
+        }
+
+
+        return AccountDTO.from(savedAccount);
+    }
+
+    @ResponseBody
+    @PostMapping("/{id}")
+    public TransferDTO transferResult(@PathVariable Long id){
+        return accountService.findResult(id);
+    }
+
+    @ResponseBody
+    @PostMapping("/transfer/{id}")
+    public boolean transferResultSave(@RequestBody TransferRequest transferRequest, @PathVariable Long id){
+        System.out.println("transferRequest = " + transferRequest);
+        return accountService.TransferResultSave(transferRequest,id);
     }
 
 }

@@ -20,5 +20,11 @@ public interface AccountRepository extends JpaRepository<Account,Long> {
             + "from account a inner join users u on a.user_id=u.id inner join "
             + "(select account_number, Count(account_number) as count from account where is_deposit_or_withdrawal=:type and user_id=:userId and date_time > now() - INTERVAL 3 MONTH group by account_number ) as innerAc on innerAc.account_number=a.account_number "
             + "where a.is_deposit_or_withdrawal=:type and user_id=:userId and date_time > now() - INTERVAL 3 MONTH order by innerAc.count desc", nativeQuery = true)
-    List<Object[]> findByTypeOrderByCountDescNativeQuery(@Param("type") String type,@Param("userId") Long userId, Pageable pageable);
+    List<Object[]> findByTypeOrderByCountDescNativeQuery(@Param("type") String type, @Param("userId") Long userId, Pageable pageable);
+
+    boolean existsByAccountNumber(String accountNumber);
+
+    List<Account> findByUserIdOrderByDateTimeDesc(Long userId, Pageable pageable);
+
+    List<Account> findByAccountNumberOrderByDateTimeDesc(String accountNumber, Pageable pageable);
 }

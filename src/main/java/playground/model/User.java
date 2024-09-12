@@ -5,10 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import playground.dto.UserInsertDTO;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,4 +28,10 @@ public class User {
 	@Builder.Default
 	@OneToMany(mappedBy = "user")
 	private List<Account> accounts = new ArrayList<>();
+
+	public static User from(UserInsertDTO userInsertDTO) {
+		return User.builder().userName(userInsertDTO.getName()).phoneNumber(userInsertDTO.getPhone_number())
+				.build();
+	}
+
 }
