@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -17,7 +17,12 @@ public class UserInsertDTO {
     private String finance_name;
     private Long depositAndWithdrawalMoney;
     private String description;
-    private LocalDate dateTime;
+
+    private LocalDateTime dateTime;
+
+    public UserInsertDTO(){
+        this.dateTime = LocalDateTime.now();
+    }
 
 }
 //UserInsertDTO.java

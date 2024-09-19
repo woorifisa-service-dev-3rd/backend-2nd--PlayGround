@@ -76,7 +76,7 @@ public class Account {
 				.description(userInsertDTO.getDescription())  // Set description
 				.depositAndWithdrawalMoney(userInsertDTO.getDepositAndWithdrawalMoney())  // Set deposit/withdrawal amount
 				.isDepositOrWithdrawal(Type.Deposit)  // Assuming Type enum, adjust as needed (you might need to map from DTO)
-				.dateTime(userInsertDTO.getDateTime().atStartOfDay())  // Set dateTime (adjust if DTO provides a LocalDate instead of LocalDateTime)
+				.dateTime(userInsertDTO.getDateTime())  // Set dateTime (adjust if DTO provides a LocalDate instead of LocalDateTime)
 				.build();
 	}
 }

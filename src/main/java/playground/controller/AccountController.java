@@ -1,7 +1,6 @@
 package playground.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -75,25 +74,67 @@ public class AccountController {
         return CheatResult.builder().result(flag).info(info).build();
     }
 
-    @ResponseBody
+//    @ResponseBody
+//    @PostMapping("/insert")
+//    public AccountDTO insertAccount_info(@RequestBody UserInsertDTO userInsertDTO) {
+//        User user = User.from(userInsertDTO);
+//        Fiance fiance = accountService.findByFianceId(userInsertDTO.getFinance_name());
+//        Account savedAccount;
+//        if (accountService.isUserinfo(userInsertDTO.getName())) {
+//            User existingUser = accountService.findUser(userInsertDTO.getName());
+//            Account account = Account.from(userInsertDTO, existingUser, fiance);
+//            savedAccount = accountService.createAccountInfo(account);
+//
+//        } else {
+//            User savedUser = accountService.createUserInfo(user);
+//            Account account = Account.from(userInsertDTO, savedUser, fiance);
+
+    @GetMapping("/insert")
+    public String getAccount_info(){
+        //insert.jsp
+        return "add";
+    }
+
     @PostMapping("/insert")
-    public AccountDTO insertAccount_info(@RequestBody UserInsertDTO userInsertDTO) {
+    public String insertAccount_info(@ModelAttribute UserInsertDTO userInsertDTO) {
+        // Convert DTO to User and Fiance
+        System.out.println("userInsertDTO = " + userInsertDTO);
         User user = User.from(userInsertDTO);
+        System.out.println("user = " + user);
+//        Fiance fiance = Fiance.from(userInsertDTO);
         Fiance fiance = accountService.findByFianceId(userInsertDTO.getFinance_name());
+        System.out.println("fiance = " + fiance);
         Account savedAccount;
+        // Check if the user exists
         if (accountService.isUserinfo(userInsertDTO.getName())) {
+            // Fetch the existing user from the database
             User existingUser = accountService.findUser(userInsertDTO.getName());
+
+            // Save the Fiance entity
+            //Fiance savedFiance = accountService.createFianceInfo(fiance);
+
+            // Create Account with the existing User and saved Fiance entity
             Account account = Account.from(userInsertDTO, existingUser, fiance);
+
+            // Save the Account
             savedAccount = accountService.createAccountInfo(account);
 
         } else {
+            // If the user doesn't exist, create and save the new User
             User savedUser = accountService.createUserInfo(user);
+
+            // Save the Fiance entity
+            //Fiance savedFiance = accountService.createFianceInfo(fiance);
+
+            // Now, create Account with the saved User and Fiance entity
             Account account = Account.from(userInsertDTO, savedUser, fiance);
+
+            // Save the Account
             savedAccount = accountService.createAccountInfo(account);
         }
 
 
-        return AccountDTO.from(savedAccount);
+        return "redirect:/account";
     }
 
     @ResponseBody
@@ -107,6 +148,7 @@ public class AccountController {
     public boolean transferResultSave(@RequestBody TransferRequest transferRequest, @PathVariable Long id){
         System.out.println("transferRequest = " + transferRequest);
         return accountService.TransferResultSave(transferRequest,id);
+
     }
 
 }

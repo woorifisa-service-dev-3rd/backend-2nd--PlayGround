@@ -4,7 +4,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import playground.dto.AccountOftenDTO;
 import playground.model.Account;
 import playground.model.Type;
 
@@ -27,4 +26,5 @@ public interface AccountRepository extends JpaRepository<Account,Long> {
     List<Account> findByUserIdOrderByDateTimeDesc(Long userId, Pageable pageable);
 
     List<Account> findByAccountNumberOrderByDateTimeDesc(String accountNumber, Pageable pageable);
+
 }

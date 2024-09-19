@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import playground.dto.AccountDTO;
 import playground.dto.TransferDTO;
 import playground.dto.TransferRequest;
+
 import playground.model.*;
 import playground.repository.AccountRepository;
 import playground.repository.FianceRepository;
@@ -27,8 +27,8 @@ public class AccountService {
 
 
     public String searchAccount(String accountNumber){
-        Account account = accountRepository.findByAccountNumber(accountNumber);
-        if(account == null){
+        boolean isExist = accountRepository.existsByAccountNumber(accountNumber);
+        if(!isExist){
             return "없는 계좌번호 입니다.";
         }
         List<TheCheat> theCheatsAccountNumber = theCheatRepository.findByAccount_AccountNumber(accountNumber);
@@ -38,8 +38,8 @@ public class AccountService {
     }
 
     public boolean searchAccountApi(String accountNumber){
-        Account account = accountRepository.findByAccountNumber(accountNumber);
-        if(account == null){
+        boolean isExist = accountRepository.existsByAccountNumber(accountNumber);
+        if(!isExist){
             return false;
         }
         List<TheCheat> theCheatsAccountNumber = theCheatRepository.findByAccount_AccountNumber(accountNumber);
@@ -91,7 +91,6 @@ public class AccountService {
     public Fiance findByFianceId(String financeName){
         return fianceRepository.findByName(financeName).orElseThrow(() -> new RuntimeException("fianceName이 정확하지 않습니다."));
     }
-
     public TransferDTO findResult(Long userId) {
         Account account = accountRepository.findByUserIdOrderByDateTimeDesc(userId, PageRequest.of(0, 1)).get(0);
         TransferDTO transferDTO = TransferDTO.builder().money(account.getMoney()).depositAndWithdrawalMoney(account.getDepositAndWithdrawalMoney()).accountNumber(account.getAccountNumber()).description(account.getDescription()).fianceId(account.getFiance().getId()).fianceName(account.getFiance().getName()).build();
